@@ -2,6 +2,8 @@
 
 package lesson1.task1
 
+import java.util.*
+import java.util.stream.DoubleStream.builder
 import kotlin.math.*
 
 // Урок 1: простые функции
@@ -65,7 +67,13 @@ fun main() {
  * Пользователь задает время в часах, минутах и секундах, например, 8:20:35.
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
-fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
+fun seconds(hours: Int, minutes: Int, seconds: Int): Long {
+   val currentDate = Calendar.Builder().setTimeOfDay(hours, minutes, seconds).build()
+    val startDate = Calendar.Builder().setTimeOfDay(0, 0, 0).build()
+    return(currentDate.timeInMillis - startDate.timeInMillis) / 1000
+
+}
+
 
 /**
  * Тривиальная (1 балл)
@@ -74,7 +82,9 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
  * Определить длину того же отрезка в метрах (в данном случае 18.98).
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
-fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = TODO()
+fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
+    return (sagenes * 48 + arshins * 16 + vershoks) * 4.445 / 100
+}
 
 /**
  * Тривиальная (1 балл)
@@ -116,12 +126,26 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
+fun accountInThreeYears(initial: Int, percent: Int): Double =
+    initial * (percent / 100.0 + 1).pow(3)
 
-/**
+
+
+/*
  * Простая (2 балла)
  *
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int = TODO()
+fun numberRevert(number: Int): Int {
+    val stringNumber = number.toString()
+    var result = ""
+    var x = stringNumber.length
+    while(x > 0) {
+        result += stringNumber[x-1]
+        x--
+    }
+    return result.toInt()
+}
+
+
