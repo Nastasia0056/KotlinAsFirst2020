@@ -87,14 +87,30 @@ fun fib(n: Int): Int = TODO()
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
+        if ( n% i == 0) {
+            return i
+        }
+    }
+    return n
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    if ( n > 1) {
+        for (i in n - 1 downTo 1) {
+            if (n % i == 0) {
+                return i
+            }
+        }
+    }
+    return 0
+}
 
 /**
  * Простая (2 балла)
@@ -120,7 +136,24 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun gcd(m: Int, n: Int): Int {
+    /*
+    Используем алгоритм Евклида для нахождения НОД
+     */
+    var a = m
+    var b = n
+    while (b > 0) {
+        val temp = b
+        b = a % b
+        a = temp
+    }
+    return a
+}
+
+fun lcm(m: Int, n: Int): Int {
+    // НОК находим по формуле НОК(a, b)=a·b:НОД(a, b)
+    return m * (n / gcd(m, n))
+}
 
 /**
  * Средняя (3 балла)
