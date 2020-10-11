@@ -68,7 +68,12 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String = when {
+    age % 100 in 5..20 -> "$age лет"
+    age % 10 == 1 -> "$age год"
+    age % 10 in 2..4 -> "$age года"
+    else -> "$age лет"
+}
 
 /**
  * Простая (2 балла)
@@ -81,7 +86,15 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    val s1 = t1 * v1
+    val s2 = t2 * v2
+    val s3 = t3 * v3
+    val s = (s1 + s2 + s3)
+    if (s1 >= s2 + s3) return s / 2.0 / v1
+    if (s1 + s2 >= s3) return t1 + (s - s1 * 2.0) / 2.0 / v2
+    return t1 + t2 + t3 - s / 2.0 / v3
+}
 
 /**
  * Простая (2 балла)
@@ -122,7 +135,21 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+if (a + b > c && a + c > b && c + b > a) {
+    val sumSquare = a * a + b * b
+    val squareC = c * c
+    return when {
+        sumSquare == squareC -> 1
+        sumSquare > squareC -> 0
+        else -> {
+            2
+        }
+    }
+}
+return -1
+}
+
 
 /**
  * Средняя (3 балла)
