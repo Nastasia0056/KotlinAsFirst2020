@@ -135,20 +135,9 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-if (a + b > c && a + c > b && c + b > a) {
-    val sumSquare = a * a + b * b
-    val squareC = c * c
-    return when {
-        sumSquare == squareC -> 1
-        sumSquare > squareC -> 0
-        else -> {
-            2
-        }
-    }
-}
-return -1
-}
+fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+
+
 
 
 /**
