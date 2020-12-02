@@ -67,12 +67,8 @@ fun main() {
  * Пользователь задает время в часах, минутах и секундах, например, 8:20:35.
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
-fun seconds(hours: Int, minutes: Int, seconds: Int): Long {
-   val currentDate = Calendar.Builder().setTimeOfDay(hours, minutes, seconds).build()
-    val startDate = Calendar.Builder().setTimeOfDay(0, 0, 0).build()
-    return(currentDate.timeInMillis - startDate.timeInMillis) / 1000
+fun seconds(hours: Int, minutes: Int, seconds: Int): Int = 3600 * hours + 60 * minutes + seconds
 
-}
 
 
 /**
@@ -108,7 +104,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = TODO()
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = TODO()
+fun thirdDigit(number: Int): Int = number % 1000 / 100
 
 /**
  * Простая (2 балла)
@@ -137,15 +133,6 @@ fun accountInThreeYears(initial: Int, percent: Int): Double =
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int {
-    val stringNumber = number.toString()
-    var result = ""
-    var x = stringNumber.length
-    while(x > 0) {
-        result += stringNumber[x-1]
-        x--
-    }
-    return result.toInt()
-}
+fun numberRevert(number: Int):Int = number % 10 * 100 + number % 100 / 10 * 10 + number / 100
 
 
