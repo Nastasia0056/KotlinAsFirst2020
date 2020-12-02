@@ -87,12 +87,9 @@ fun fib(n: Int): Int = TODO()
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int {
-    for (i in 2..sqrt(n.toDouble()).toInt()) {
-        if ( n% i == 0) {
-            return i
-        }
-    }
+fun minDivisor(n: Int):  Int {
+    if (n % 2 == 0) return 2
+    for (divisor in 3..sqrt(n.toDouble()).toInt() step 2) if (n % divisor == 0) return divisor
     return n
 }
 
@@ -101,16 +98,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    if ( n > 1) {
-        for (i in n - 1 downTo 1) {
-            if (n % i == 0) {
-                return i
-            }
-        }
-    }
-    return 0
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая (2 балла)
