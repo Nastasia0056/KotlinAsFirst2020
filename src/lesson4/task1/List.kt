@@ -154,8 +154,8 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val s = list.sum()/ list.size
-    for (i in 0 until list.size)list[i]-= s
+    val s = list.sum() / list.size
+    for (i in 0 until list.size) list[i] -= s
     return list
 }
 
@@ -167,7 +167,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
 fun times(a: List<Int>, b: List<Int>): Int {
-    var c =0
+    var c = 0
     for (i in 0 until a.size) {
         c += a[i] * b[i]
     }
