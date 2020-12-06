@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import javax.swing.JPopupMenu
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -203,7 +204,19 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    val list = mutableListOf<Int>()
+    var numb = n
+    var fact = 2
+    while (numb > 1) {
+        while (numb % fact == 0) {
+            list.add(fact)
+            numb /= fact
+        }
+        fact++
+    }
+    return list
+}
 
 /**
  * Сложная (4 балла)
@@ -212,7 +225,8 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
+
 
 /**
  * Средняя (3 балла)
@@ -267,7 +281,34 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val list = mutableListOf<String>()
+    var numb = n
+    var exc = 0
+    while (numb > 0) {
+        exc++
+        val c = when (exc) {
+            1 -> listOf("I", "V", "X")
+            2 -> listOf("X", "L", "C")
+            3 -> listOf("C", "D", "M")
+            else -> listOf("M")
+        }
+        val digit = numb % 10
+        numb /= 10
+        list.add(
+            0,
+            when {
+                exc > 3 -> c[0].repeat(digit)
+                digit in 1..3 -> c[0].repeat(digit)
+                digit in 4..5 -> c[0].repeat(5 - digit) + c[1]
+                digit in 6..8 -> c[1] + c[0].repeat(digit - 5)
+                digit == 9 -> c[0].repeat(10 - digit) + c[2]
+                else -> ""
+            }
+        )
+    }
+    return list.joinToString(separator = "")
+}
 
 /**
  * Очень сложная (7 баллов)
