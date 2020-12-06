@@ -165,7 +165,7 @@ fun lcm(m: Int, n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean = gcd(m, n) == 1
 
 /**
  * Средняя (3 балла)
@@ -217,6 +217,7 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  */
 fun sin(x: Double, eps: Double): Double = TODO()
 
+
 /**
  * Средняя (4 балла)
  *
@@ -238,7 +239,6 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int = TODO()
-
 /**
  * Сложная (5 баллов)
  *
