@@ -162,7 +162,23 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var mostExpns = -1.0
+    var mostExpnsTitle = ""
+    val list = description.split("; ")
+    for (i in list) {
+        val parts = i.split(' ')
+        if (parts.size != 2) return ""
+        val numb = parts[1].toDoubleOrNull()
+        if ((numb == null) || (numb < 0.0)) return ""
+        if (mostExpns < numb) {
+            mostExpns = numb
+            mostExpnsTitle = parts[0]
+        }
+    }
+    return mostExpnsTitle
+}
+
 
 /**
  * Сложная (6 баллов)
@@ -175,7 +191,32 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    var res = 0
+    val r = mapOf("M" to 1000, "CM" to 900, "DCCC" to 800, "DCC" to 700, "DC" to 600, "D" to 500,
+        "CD" to 400, "CCC" to 300, "CC" to 200, "C" to 100, "XC" to 90, "LXXX" to 80,
+        "LXX" to 70, "LX" to 60, "L" to 50, "XL" to 40, "XXX" to 30, "XX" to 20, "X" to 10,
+        "IX" to 9, "VIII" to 8, "VII" to 7, "VI" to 6, "V" to 5, "IV" to 4, "III" to 3, "II" to 2, "I" to 1)
+    if (roman == "") return -1
+    var startIndex = 0
+    var endIndex = 0
+    var previewNumb = 1001
+    while (startIndex < roman.length) {
+        var wasIn = false
+        while (roman.substring(startIndex, endIndex + 1) in r) {
+            wasIn = true
+            endIndex++
+            if (endIndex == roman.length) break
+        }
+        if (!wasIn) return -1
+        val newNumb = r.getOrDefault(roman.substring(startIndex, endIndex), 0)
+        if (newNumb > previewNumb) return -1
+        res += newNumb
+        previewNumb = newNumb
+        startIndex = endIndex
+    }
+    return res
+}
 
 /**
  * Очень сложная (7 баллов)
