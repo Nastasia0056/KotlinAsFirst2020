@@ -30,7 +30,7 @@ class Complex(val re: Double, val im: Double) {
         private fun getRe(s: String): Double = s.substring(0, getIndex(s)).toDouble()
 
         private fun getIm(s: String): Double {
-            val i = getIndex(s);
+            val i = getIndex(s)
             val im = s.substring(i, s.length - 1).toDouble()
             return if (s.toCharArray()[i] == '+') im
             else abs(im) * -1
@@ -109,10 +109,8 @@ class Complex(val re: Double, val im: Double) {
         return "$re+${im}i"
     }
 
+    override fun hashCode(): Int = super.hashCode()
 }
-
-
-
 
 
 
