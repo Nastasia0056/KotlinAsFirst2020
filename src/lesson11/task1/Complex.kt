@@ -94,8 +94,7 @@ class Complex(val re: Double, val im: Double) {
     override fun equals(other: Any?): Boolean {
         if (other == null) return false
         if (other !is Complex) return false
-        val comp = other
-        return re == comp.re && im == comp.im
+        return re == other.re && im == other.im
     }
 
 
@@ -109,8 +108,13 @@ class Complex(val re: Double, val im: Double) {
         return "$re+${im}i"
     }
 
-    override fun hashCode(): Int = super.hashCode()
+    override fun hashCode(): Int {
+        var result = re.hashCode()
+        result = 31 * result + im.hashCode()
+        return result
+    }
 }
+
 
 
 
