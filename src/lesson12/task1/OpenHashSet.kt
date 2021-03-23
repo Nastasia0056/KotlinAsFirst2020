@@ -21,24 +21,32 @@ class OpenHashSet<T>(val capacity: Int) {
      * Массив для хранения элементов хеш-таблицы
      */
     internal val elements = Array<Any?>(capacity) { null }
-    var count = 0
+    //var count = 0
 
     /**
      * Число элементов в хеш-таблице
      */
-    val size: Int get() = this.count
-
-    /**
-     * Максимальное число элементов в хеш-таблице
-     */
-    val maxSize: Int get() = this.capacity
+    override fun hashCode() = elements.sumBy { it.hashCode() }
+    var size: Int = 0
 
     /**
      * Признак пустоты
      */
-    fun isEmpty(): Boolean = this.count <= 0
-
+    fun isEmpty(): Boolean = size == 0
     private fun Any?.hashCode(): Int = this?.hashCode() ?: 0
+
+
+    fun place(element: T, searchElem: T?): Int {
+        var i = 0
+        var space = (element.hashCode() + i) % capacity
+        val hashOfElem = space
+        if (this.elements[space] == searchElem) return space
+        do {
+            i++
+            space = (hashOfElem + i) % capacity
+        } while (this.elements[space] != searchElem && space != hashOfElem)
+        return space
+    }
 
     /**
      * Добавление элемента.
@@ -46,17 +54,13 @@ class OpenHashSet<T>(val capacity: Int) {
      * или false, если такой элемент уже был в таблице, или превышена вместимость таблицы.
      */
     fun add(element: T): Boolean {
-        if (count != capacity) {
-            if (this.contains(element)) {
-                return false
+        if (size != capacity) {
+            return if (this.contains(element)) {
+                false
             } else {
-                var i = 0
-                while (this.elements[(element.hashCode() + i) % capacity] != null) {
-                    i++
-                }
-                this.elements[(element.hashCode() + i) % capacity] = element
-                count++
-                return true
+                this.elements[place(element, null)] = element
+                size++
+                true
             }
         }
         return false
@@ -65,53 +69,41 @@ class OpenHashSet<T>(val capacity: Int) {
     /**
      * Проверка, входит ли заданный элемент в хеш-таблицу
      */
-    operator fun contains(element: T): Boolean {
-        var i = 0
-        while (this.elements[(element.hashCode() + i) % capacity] != null) {
-            if (this.elements[(element.hashCode() + i) % capacity] == element) {
-                return true
-            }
-            i++
-            if (i == this.capacity) {
-                break
-            }
-        }
-        return false
-    }
+    operator fun contains(element: T): Boolean =
+        this.elements[place(element, element)] == element
 
     /**
      * Таблицы равны, если в них одинаковое количество элементов,
      * и любой элемент из второй таблицы входит также и в первую
      */
     override fun equals(other: Any?): Boolean {
-        if (other?.javaClass != javaClass) return false
-        other as OpenHashSet<T>
-        if (other.size == this.size) {
-            for (i in 0..(this.size - 1)) {
-                if (this.elements[i] != null) {
-                    var index = (this.elements[i].hashCode() % this.capacity)
-                    var j = 0
-                    var count = 0
-                    var flag = false
-                    while (other.elements[index + j] != null) {
-                        if (other.elements[index + j] == this.elements[i]) {
-                            flag = true
-                        }
-                        j++
-                        count++
-                        if((index + j)==other.capacity){
-                            index = 0
-                            j=0
-                        }
-                        if(count == other.capacity)
-                            break
+        if (this === other) return true
+        if (other !is OpenHashSet<*>) return false
+        if (other.size != this.size) return false
+
+        for (i in 0 until this.size) {
+            if (this.elements[i] != null) {
+                var index = (this.elements[i].hashCode() % this.capacity)
+                var j = 0
+                var count = 0
+                var flag = false
+                while (other.elements[index + j] != null) {
+                    if (other.elements[index + j] == this.elements[i]) {
+                        flag = true
                     }
-                    if (flag == false)
-                        return false
+                    j++
+                    count++
+                    if ((index + j) == other.capacity) {
+                        index = 0
+                        j = 0
+                    }
+                    if (count == other.capacity)
+                        break
                 }
+                if (!flag)
+                    return false
             }
-            return true
         }
-        return false
+        return true
     }
 }
