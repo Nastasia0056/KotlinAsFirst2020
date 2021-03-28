@@ -2,8 +2,11 @@
 
 package lesson11.task1
 
-import kotlin.math.abs
+
 import kotlin.math.pow
+
+
+val regex = Regex("""(-?\d+(?:\.\d+)?)([+-]\d+(?:\.\d+)?)i""")
 
 /**
  * Класс "комплексное число".
@@ -19,29 +22,21 @@ class Complex(val re: Double, val im: Double) {
     /**
      * Конструктор из вещественного числа
      */
-    constructor(x: Double) : this(x,0.0)
+    constructor(x: Double) : this(x, 0.0)
 
     /**
      * Конструктор из строки вида x+yi
      */
-    constructor(s: String) : this(getRe(s), getIm(s))
 
     companion object {
-        private fun getRe(s: String): Double = s.substring(0, getIndex(s)).toDouble()
-
-        private fun getIm(s: String): Double {
-            val i = getIndex(s)
-            val im = s.substring(i, s.length - 1).toDouble()
-            return if (s.toCharArray()[i] == '+') im
-            else abs(im) * -1
+        fun Check(s: String, i: Int): Double {
+            val result = regex.matchEntire(s) ?: throw IllegalArgumentException()
+            return result.groupValues[i].toDouble()
         }
 
-        private fun getIndex(s: String): Int {
-            val plus = s.indexOf('+')
-            return if (plus != -1) plus
-            else s.indexOf('-')
-        }
     }
+
+    constructor(s: String) : this(Check(s, 1), Check(s, 2))
 
     /**
      * Сложение.
@@ -92,9 +87,9 @@ class Complex(val re: Double, val im: Double) {
      * Сравнение на равенство
      */
     override fun equals(other: Any?): Boolean {
-        if (other == null) return false
+        if (this === other) return true
         if (other !is Complex) return false
-        return re == other.re && im == other.im
+        return other.im == im && other.re == re
     }
 
 
