@@ -29,14 +29,14 @@ class Complex(val re: Double, val im: Double) {
      */
 
     companion object {
-        fun Check(s: String, i: Int): Double {
+        fun check(s: String, i: Int): Double {
             val result = regex.matchEntire(s) ?: throw IllegalArgumentException()
             return result.groupValues[i].toDouble()
         }
 
     }
 
-    constructor(s: String) : this(Check(s, 1), Check(s, 2))
+    constructor(s: String) : this(check(s, 1), check(s, 2))
 
     /**
      * Сложение.
